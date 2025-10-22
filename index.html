@@ -101,15 +101,11 @@
   <h1>Cuenta regresiva para tu cumpleaños 🎉</h1>
   <div id="countdown"></div>
   <div class="envelopes">
-    <div class="envelope" onclick="openEnvelope(1)">
-      <div class="flap"></div>
-    </div>
-    <div class="envelope" onclick="openEnvelope(2)">
-      <div class="flap"></div>
-    </div>
-    <div class="envelope" onclick="openEnvelope(3)">
-      <div class="flap"></div>
-    </div>
+    <div class="envelope" onclick="openEnvelope(1)"><div class="flap"></div></div>
+    <div class="envelope" onclick="openEnvelope(2)"><div class="flap"></div></div>
+    <div class="envelope" onclick="openEnvelope(3)"><div class="flap"></div></div>
+    <div class="envelope" onclick="openEnvelope(4)"><div class="flap"></div></div>
+    <div class="envelope" onclick="openEnvelope(5)"><div class="flap"></div></div>
   </div>
   <div id="messageBox" class="message-box">
     <h2>💌 Sorpresa</h2>
@@ -133,15 +129,20 @@
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
       countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
+
     const messages = {
       1: "💛 Eres una persona muy especial. Que este día esté lleno de sonrisas, amor y momentos inolvidables.",
       2: "🌻 Cada día que pasa, me alegra haberte conocido. Espero que este cumpleaños sea tan bonito como tú.",
-      3: "🎶 Hoy el mundo celebra a alguien increíble. Gracias por ser tú, por tu alegría y tu forma de ser."
+      3: "🎶 Hoy el mundo celebra a alguien increíble. Gracias por ser tú, por tu alegría y tu forma de ser.",
+      4: "🎉 Que todos tus sueños se hagan realidad y que este año esté lleno de aventuras y risas.",
+      5: "🌟 Nunca dejes de brillar, que la vida te regale momentos tan hermosos como tu sonrisa."
     };
+
     function openEnvelope(num) {
       document.getElementById('messageBox').style.display = 'block';
       document.getElementById('messageText').innerText = messages[num];
     }
+
     function closeMessage() {
       document.getElementById('messageBox').style.display = 'none';
     }
