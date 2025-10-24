@@ -96,6 +96,7 @@ function startConfetti(){
   }
 }
 
+// Secuencia de música
 function playBirthdaySequence(){
   const badbunny=document.getElementById('badbunny');
   const felizcumple=document.getElementById('felizcumple');
@@ -106,22 +107,22 @@ function playBirthdaySequence(){
   },8000);
 }
 
-let countdownTime=20; let timer;
-function startCountdown(){
-  timer=setInterval(()=>{
-    if(countdownTime<=0){ clearInterval(timer); countdown.innerHTML="🎂 ¡Feliz cumpleaños! 💛"; unlockEnvelopes(); startConfetti(); playBirthdaySequence(); return;}
-    countdown.innerHTML=`${countdownTime}s`;
-    countdownTime--;
-  },1000);
-}
+// Contador hasta 12:00 AM del 1 de noviembre
+const targetDate = new Date('November 1, 2025 00:00:00').getTime();
 
-document.getElementById('startBtn').addEventListener('click',()=>{
-  document.getElementById('startBtn').style.display='none';
-  const badbunny=document.getElementById('badbunny');
-  const felizcumple=document.getElementById('felizcumple');
-  badbunny.volume=0.5; felizcumple.volume=0.5; badbunny.play().catch(e=>console.log("Error:",e));
-  startCountdown();
-});
-</script>
-</body>
-</html>
+function startCountdown() {
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      clearInterval(timer);
+      countdown.innerHTML = "🎂 ¡Feliz cumpleaños! 💛";
+      unlockEnvelopes();
+      startConfetti();
+      playBirthdaySequence();
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000
