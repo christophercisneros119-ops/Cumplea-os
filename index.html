@@ -25,8 +25,6 @@ h1 { font-size:2.5em; margin-top:60px; text-shadow:2px 2px 6px black; color:whit
 .btns { display:flex; justify-content:space-around; margin-top:20px;}
 .confetti { position:absolute; width:10px; height:10px; opacity:0.9; z-index:9; pointer-events:none; animation:fall 3s linear infinite;}
 @keyframes fall { 0% { transform:translateY(-10px) rotate(0deg);} 100% { transform:translateY(110vh) rotate(360deg);} }
-#startBtn { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-background:#f39c12;color:white;padding:20px 30px;border-radius:15px;font-size:1.5em;cursor:pointer; z-index:20;}
 </style>
 </head>
 <body>
@@ -34,9 +32,6 @@ background:#f39c12;color:white;padding:20px 30px;border-radius:15px;font-size:1.
 <!-- Audios de fondo -->
 <audio id="badbunny" src="badbunny_fragmento.mp3"></audio>
 <audio id="felizcumple" src="feliz_cumpleanos.mp3"></audio>
-
-<!-- Botón inicio para móviles -->
-<div id="startBtn">🎵 Tocar música y comenzar celebración</div>
 
 <div class="overlay"></div>
 <h1>🎉 Feliz Cumpleaños Hermosa 🎉</h1>
@@ -111,6 +106,9 @@ function playBirthdaySequence(){
 const targetDate = new Date('November 1, 2025 00:00:00').getTime();
 
 function startCountdown() {
+  const badbunny = document.getElementById('badbunny');
+  const felizcumple = document.getElementById('felizcumple');
+
   const timer = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
@@ -125,4 +123,18 @@ function startCountdown() {
     }
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
+}
+
+// Iniciar contador automáticamente al cargar la página
+window.addEventListener('load', () => {
+  startCountdown();
+});
+</script>
+</body>
+</html>
