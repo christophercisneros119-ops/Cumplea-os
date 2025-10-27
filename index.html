@@ -29,7 +29,7 @@ h1 {
 .envelopes {
   display:flex; justify-content:center; flex-wrap:wrap;
   gap:30px; margin-top:50px;
-  z-index:2; position:relative;
+  z-index:2; position:relative; transition: opacity 1s ease;
 }
 .envelope {
   width:100px; height:80px;
@@ -87,6 +87,7 @@ h1 {
   box-shadow:0 4px 15px rgba(0,0,0,0.5);
   position:relative; cursor:pointer;
   animation:shine 2s infinite alternate ease-in-out;
+  z-index:3;
 }
 .final-flap {
   width:0; height:0;
@@ -164,7 +165,7 @@ const countdown = document.getElementById('countdown');
 const envelopes = document.querySelectorAll('.envelope');
 let selectedEnvelope = null;
 let openedCount = 0;
-let seconds = 10; // para prueba
+let seconds = 10; // para prueba rápida
 const password = "071113";
 
 const messages = {
@@ -178,6 +179,7 @@ const messages = {
 function unlockEnvelopes(){
   envelopes.forEach(e=>{ e.classList.add('unlocked'); e.style.cursor='pointer'; });
 }
+
 function confirmOpen(num){
   if(!envelopes[num-1].classList.contains('unlocked')) return;
   selectedEnvelope=num;
@@ -194,17 +196,20 @@ function openEnvelope(){
   envelopes[selectedEnvelope-1].style.cursor='not-allowed';
   openedCount++;
 
-  if(openedCount===5){
+  if(openedCount === 5){
     setTimeout(()=>{
       document.querySelector('.envelopes').style.opacity='0';
       setTimeout(()=>{
         document.querySelector('.envelopes').style.display='none';
-        document.getElementById('finalEnvelope').style.display='block';
+        const finalEnv = document.getElementById('finalEnvelope');
+        finalEnv.style.display='block';
+        finalEnv.style.opacity='1';
         startConfetti();
       },1000);
-    },500);
+    },1000);
   }
 }
+
 function closeMessage(){ document.getElementById('messageBox').style.display='none'; }
 
 function startConfetti(){
