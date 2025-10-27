@@ -170,7 +170,7 @@ function showFinalMessage(){
   setTimeout(() => {
     document.getElementById('messageText').innerText = "👋 Hasta Luego!! 💛";
     startConfetti();
-    messageBox.style.transition = "text-shadow 0.20 s ease-in-out";
+    messageBox.style.transition = "text-shadow 0.40 s ease-in-out";
     let glow = 0;
     const glowInterval = setInterval(() => {
       messageBox.style.textShadow = `0 0 ${10 + glow}px #ffd700, 0 0 ${20 + glow}px #f39c12`;
