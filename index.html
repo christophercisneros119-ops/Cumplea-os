@@ -159,6 +159,7 @@ const countdown = document.getElementById('countdown');
 const envelopes = document.querySelectorAll('.envelope');
 let selectedEnvelope = null;
 let openedCount = 0;
+let seconds = 10; // tiempo de prueba (10 segundos)
 
 const messages = {
 1: "💛 Eres una persona muy especial. Que este día esté lleno de sonrisas, amor y momentos inolvidables.",
@@ -177,13 +178,11 @@ function openEnvelope() {
   document.getElementById('messageText').innerText = messages[selectedEnvelope];
   document.getElementById('messageBox').style.display = 'block';
 
-  // Marcar el sobre como abierto
   envelopes[selectedEnvelope - 1].classList.remove('unlocked');
   envelopes[selectedEnvelope - 1].style.opacity = '0.3';
   envelopes[selectedEnvelope - 1].style.cursor = 'not-allowed';
   openedCount++;
 
-  // Si ya abrió las 5 cartas
   if (openedCount === 5) {
     setTimeout(() => {
       document.querySelector('.envelopes').style.transition = 'opacity 1s ease';
@@ -214,22 +213,21 @@ function startConfetti(){
   }
 }
 
-function playBirthdaySequence(){
-  const badbunny=document.getElementById('badbunny');
-  const felizcumple=document.getElementById('felizcumple');
-  badbunny.currentTime=30; badbunny.volume=0.5; badbunny.play();
-  setTimeout(()=>{
-    badbunny.pause();
-    setTimeout(()=>{ felizcumple.currentTime=0; felizcumple.volume=0.5; felizcumple.play(); },2000);
-  },8000);
+// 🔹 Contador de prueba de 10 segundos
+function startCountdownTest() {
+  const timer = setInterval(() => {
+    countdown.innerHTML = `⏳ Espera ${seconds}s para abrir las sorpresas...`;
+    seconds--;
+    if (seconds < 0) {
+      clearInterval(timer);
+      countdown.innerHTML = "✨ ¡Ya puedes abrir los sobres! ✨";
+      unlockEnvelopes();
+      startConfetti();
+    }
+  }, 1000);
 }
 
-// 🔹 MODO PRUEBA: se desbloquean las cartas a los 10 segundos
-setTimeout(()=>{
-  countdown.innerHTML = "✨ ¡Ya puedes abrir los sobres! ✨";
-  unlockEnvelopes();
-  startConfetti();
-}, 10000);
+window.addEventListener('load', startCountdownTest);
 </script>
 </body>
 </html>
