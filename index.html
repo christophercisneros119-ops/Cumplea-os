@@ -166,17 +166,10 @@ function showFinalMessage(){
   // Confeti inicial
   startConfetti();
 
-  // Después de 5 segundos, mostrar "Hasta Luego!!" con confeti y brillo
+  // Después de 5 segundos, mostrar "Hasta Luego!!"
   setTimeout(() => {
     document.getElementById('messageText').innerText = "👋 Hasta Luego!! 💛";
     startConfetti();
-    messageBox.style.transition = "text-shadow 0.40 s ease-in-out";
-    let glow = 0;
-    const glowInterval = setInterval(() => {
-      messageBox.style.textShadow = `0 0 ${10 + glow}px #ffd700, 0 0 ${20 + glow}px #f39c12`;
-      glow += 2;
-      if(glow > 20) clearInterval(glowInterval);
-    }, 100);
   }, 5000);
 }
 
@@ -217,21 +210,32 @@ function checkPassword(){
   }
 }
 
-// Contador de prueba (10 segundos)
-const targetDate = new Date().getTime() + 10000;
+// 🎯 Contador ajustado a la hora de Nicaragua (UTC-6)
+function getNicaraguaTime() {
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  return new Date(utc - 6 * 60 * 60 * 1000);
+}
 
 function startCountdown() {
+  const targetDate = new Date(Date.UTC(2025, 10, 1, 6, 0, 0)); // 00:00 en Nicaragua = 06:00 UTC
   const timer = setInterval(() => {
-    const now = new Date().getTime();
+    const now = getNicaraguaTime();
     const distance = targetDate - now;
+
     if (distance <= 0) {
       clearInterval(timer);
       countdown.innerHTML = "🫶 Quise ser la primera persona en felicitarte hoy 1 de noviembre y que mejor que de esta manera. Espero te guste..👸";
       showPasswordBox();
       return;
     }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    countdown.innerHTML = `⏳ ${seconds}s`;
+
+    countdown.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s`;
   }, 1000);
 }
 
