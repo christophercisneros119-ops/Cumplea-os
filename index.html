@@ -87,7 +87,6 @@ h1 {
 </head>
 <body>
 
-<!-- Audios de fondo -->
 <audio id="badbunny" src="badbunny_fragmento.mp3"></audio>
 <audio id="felizcumple" src="feliz_cumpleanos.mp3"></audio>
 
@@ -159,8 +158,26 @@ function showFinalEnvelope(){
 }
 
 function showFinalMessage(){
-  document.getElementById('messageText').innerText = "🎇 Esta es la sorpresa final 💛 Solo quería decirte que me alegra mucho haberte conocido y deseo que hoy tengas un cumpleaños inolvidable 🌻";
-  document.getElementById('messageBox').style.display='block';
+  const messageBox = document.getElementById('messageBox');
+  messageBox.style.display='block';
+  document.getElementById('messageText').innerText = 
+    "🎇 Esta es la sorpresa final 💛\nSolo quería decirte que me alegra mucho haberte conocido y deseo que hoy tengas un cumpleaños inolvidable 🌻";
+  
+  // Confeti inicial
+  startConfetti();
+
+  // Después de 5 segundos, mostrar "Hasta Luego!!" con confeti y brillo
+  setTimeout(() => {
+    document.getElementById('messageText').innerText = "👋 Hasta Luego!! 💛";
+    startConfetti();
+    messageBox.style.transition = "text-shadow 0.5s ease-in-out";
+    let glow = 0;
+    const glowInterval = setInterval(() => {
+      messageBox.style.textShadow = `0 0 ${10 + glow}px #ffd700, 0 0 ${20 + glow}px #f39c12`;
+      glow += 2;
+      if(glow > 20) clearInterval(glowInterval);
+    }, 100);
+  }, 5000);
 }
 
 function startConfetti(){
@@ -188,7 +205,6 @@ function playBirthdaySequence(){
 }
 
 function showPasswordBox(){ document.getElementById('passwordBox').style.display='block'; }
-
 function checkPassword(){
   const input = document.getElementById('passwordInput').value;
   if(input === "071113"){
@@ -208,14 +224,12 @@ function startCountdown() {
   const timer = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
-
     if (distance <= 0) {
       clearInterval(timer);
       countdown.innerHTML = "🎂 ¡Feliz cumpleaños! 💛";
       showPasswordBox();
       return;
     }
-
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
     countdown.innerHTML = `⏳ ${seconds}s`;
   }, 1000);
